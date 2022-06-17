@@ -1,0 +1,86 @@
+version: "3.2"
+services:
+  radarr:
+    container_name: radarr
+    image: cr.hotio.dev/hotio/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Europe/Stockholm
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/appdata/radarr:/config
+      - /mnt/data:/data
+  sonarr:
+    container_name: sonarr
+    image: cr.hotio.dev/hotio/sonarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Europe/Stockholm
+    volumes:
+      - /docker/appdata/sonarr:/config
+      - /mnt/data:/data
+  bazarr:
+    container_name: bazarr
+    image: cr.hotio.dev/hotio/bazarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Europe/Stockholm
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/appdata/bazarr:/config
+      - /mnt/data:/data/media
+  jackett:
+    container_name: jackett
+    image: cr.hotio.dev/hotio/jackett
+    ports:
+      - "9117:9117"
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Europe/Stockholm
+    volumes:
+      - /docker/appdata/jackett:/config
+  plex:
+    image: cr.hotio.dev/hotio/plex
+    volumes:
+        - /docker/appdata/plex:/config
+        - /mnt/data/media:/data/media
+    environment:
+        - PUID=106
+        - PGID=112
+        - UMASK=002
+  qbittorrent:
+   container_name: qbittorrent
+   image: cr.hotio.dev/hotio/qbittorrent
+   ports:
+     - "8080:8080"
+   environment:
+     - PUID=106
+     - PGID=112
+     - UMASK=002
+     - TZ=Etc/UTC
+   volumes:
+     - /docker/appata/qbittorrent:/config 
+     - /mnt/torrent:/home/admin/
