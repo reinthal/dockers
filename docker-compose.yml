@@ -3,6 +3,7 @@ services:
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
+    network_mode: bridge
     restart: unless-stopped
     logging:
       driver: json-file
@@ -19,6 +20,7 @@ services:
       - /mnt/data:/data
   sonarr:
     container_name: sonarr
+    network_mode: bridge
     image: cr.hotio.dev/hotio/sonarr:latest
     restart: unless-stopped
     logging:
@@ -36,6 +38,7 @@ services:
   bazarr:
     container_name: bazarr
     image: cr.hotio.dev/hotio/bazarr:latest
+    network_mode: bridge
     restart: unless-stopped
     logging:
       driver: json-file
@@ -53,6 +56,7 @@ services:
   jackett:
     container_name: jackett
     image: cr.hotio.dev/hotio/jackett
+    network_mode: bridge
     ports:
       - "9117:9117"
     environment:
@@ -64,6 +68,8 @@ services:
       - /docker/appdata/jackett:/config
   plex:
     image: cr.hotio.dev/hotio/plex
+    container_name: plex 
+    network_mode: bridge
     volumes:
         - /docker/appdata/plex:/config
         - /mnt/data/media:/data/media
@@ -71,9 +77,14 @@ services:
         - PUID=106
         - PGID=112
         - UMASK=002
+        - PLEX_CLAIM=claim-JR7jmE-ybxzVKxZffz1W
+        - PLEX_PASS="yes"
+    ports:
+      - "32400:32400" 
   qbittorrent:
    container_name: qbittorrent
    image: cr.hotio.dev/hotio/qbittorrent
+   network_mode: bridge
    ports:
      - "8080:8080"
    environment:
@@ -83,4 +94,10 @@ services:
      - TZ=Etc/UTC
    volumes:
      - /docker/appata/qbittorrent:/config 
-     - /mnt/torrent:/home/admin/
+     - /mnt/data/torrent:/home/admin/
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.13.0/24
