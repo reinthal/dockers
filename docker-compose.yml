@@ -117,3 +117,17 @@ services:
     volumes:
      - /docker/appdata/npm/data:/data
      - /docker/appdata/npm/lencr:/etc/letsencrypt
+  organizr:
+    container_name: organizr
+    hostname: organizr
+      image: organizr/organizr:latest
+      restart: unless-stopped
+      ports:
+        - 8480:80
+        - 8443:443
+      volumes:
+        - /docker/appdata/organizr:/config
+      environment:
+        - PUID=106
+        - PGID=112
+        - TZ=Europe/Stockholm
