@@ -1,5 +1,16 @@
 version: "3.2"
 services:
+  flaresolver:
+    container_name: flaresolver
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    network_mode: host
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8191:8191
+    environment:
+      - LOG_LEVEL=info
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
