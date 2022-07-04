@@ -11,6 +11,19 @@ services:
       - 8191:8191
     environment:
       - LOG_LEVEL=info
+  readarr:
+    container_name: readarr
+    image: cr.hotio.dev/hotio/readarr:nightly
+    ports:
+      - "8787:8787"
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Etc/Stockholm
+    volumes:
+      - /docker/appdata/readarr:/config
+      - /mnt/data:/data
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
