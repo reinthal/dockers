@@ -13,6 +13,7 @@ services:
       - LOG_LEVEL=info
   readarr:
     container_name: readarr
+    restart: unless-stopped
     image: cr.hotio.dev/hotio/readarr:nightly
     ports:
       - "8787:8787"
