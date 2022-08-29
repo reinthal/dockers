@@ -146,3 +146,26 @@ services:
       - PUID=106
       - PGID=112
       - TZ=Europe/Stockholm
+  prowlarr:
+    container_name: prowlarr
+    image: cr.hotio.dev/hotio/prowlarr:nightly
+    ports:
+      - "9696:9696"
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Etc/Stockholm
+    volumes:
+      - /docker/appdata/prowlarr:/config
+  qbitmanage:
+    container_name: qbitmanage
+    image: cr.hotio.dev/hotio/qbitmanage
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Etc/Stockholm
+      - ARGS
+    volumes:
+      - /docker/appdata/qbitmanage:/config
