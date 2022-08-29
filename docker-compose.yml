@@ -105,6 +105,7 @@ services:
         - PGID=112
         - UMASK=002
         - PLEX_CLAIM=claim-JR7jmE-ybxzVKxZffz1W
+        - ALLOWED_NETWORKS=192.168.2.0/24
         - PLEX_PASS="yes"
     ports:
       - "32400:32400" 
