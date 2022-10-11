@@ -1,5 +1,19 @@
 version: "3.2"
 services:
+  lidarr:
+    container_name: lidarr
+    image: cr.hotio.dev/hotio/lidarr
+    restart: unless-stopped
+    ports:
+      - "8686:8686"
+    environment:
+      - PUID=106
+      - PGID=112
+      - UMASK=002
+      - TZ=Etc/Stockholm
+    volumes:
+      - /docker/appdata/lidarr:/config
+      - /mnt/data:/data
   flaresolver:
     container_name: flaresolver
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -105,7 +119,7 @@ services:
         - PGID=112
         - UMASK=002
         - PLEX_CLAIM=claim-JR7jmE-ybxzVKxZffz1W
-        - ALLOWED_NETWORKS=192.168.2.0/24
+        - ALLOWED_NETWORKS=192.168.2.0/24,10.20.30.0/24
         - PLEX_PASS="yes"
     ports:
       - "32400:32400" 
@@ -149,6 +163,7 @@ services:
   prowlarr:
     container_name: prowlarr
     image: cr.hotio.dev/hotio/prowlarr:nightly
+    restart: unless-stopped
     ports:
       - "9696:9696"
     environment:
@@ -158,14 +173,16 @@ services:
       - TZ=Etc/Stockholm
     volumes:
       - /docker/appdata/prowlarr:/config
-  qbitmanage:
-    container_name: qbitmanage
-    image: cr.hotio.dev/hotio/qbitmanage
+  overseerr:
+    container_name: overseerr
+    image: cr.hotio.dev/hotio/overseerr
+    restart: unless-stopped
+    ports:
+      - "5055:5055"
     environment:
       - PUID=106
       - PGID=112
       - UMASK=002
       - TZ=Etc/Stockholm
-      - ARGS
     volumes:
-      - /docker/appdata/qbitmanage:/config
+      - /docker/appdata/overseerr:/config
