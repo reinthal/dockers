@@ -186,3 +186,16 @@ services:
       - TZ=Etc/Stockholm
     volumes:
       - /docker/appdata/overseerr:/config
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    environment:
+      - AUDIOBOOKSHELF_UID=106
+      - AUDIOBOOKSHELF_GID=112
+    ports:
+      - 13378:80
+    volumes:
+      - /mnt/data/media/books:/audiobooks
+      - /mnt/data/media/podcasts:/podcasts
+      - /docker/appdata/audiobookshelf/config:/config
+      - /mnt/data/media/metadata:/metadata
