@@ -121,20 +121,6 @@ services:
     volumes:
      - /docker/appdata/npm/data:/data
      - /docker/appdata/npm/lencr:/etc/letsencrypt
-  organizr:
-    container_name: organizr
-    hostname: organizr
-    image: organizr/organizr:latest
-    restart: unless-stopped
-    ports:
-      - 8480:80
-      - 8443:443
-    volumes:
-      - /docker/appdata/organizr:/config
-    environment:
-      - PUID=106
-      - PGID=112
-      - TZ=Europe/Stockholm
   prowlarr:
     container_name: prowlarr
     image: cr.hotio.dev/hotio/prowlarr:nightly
@@ -161,16 +147,3 @@ services:
       - TZ=Etc/Stockholm
     volumes:
       - /docker/appdata/overseerr:/config
-  audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:latest
-    restart: unless-stopped
-    environment:
-      - AUDIOBOOKSHELF_UID=106
-      - AUDIOBOOKSHELF_GID=112
-    ports:
-      - 13378:80
-    volumes:
-      - /mnt/data/media/books:/audiobooks
-      - /mnt/data/media/podcasts:/podcasts
-      - /docker/appdata/audiobookshelf/config:/config
-      - /mnt/data/media/metadata:/metadata
