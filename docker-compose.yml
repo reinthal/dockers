@@ -2,7 +2,7 @@ version: "3.2"
 services:
   lidarr:
     container_name: lidarr
-    image: cr.hotio.dev/hotio/lidarr
+    image: cr.hotio.dev/hotio/lidarr:latest
     restart: unless-stopped
     ports:
       - "8686:8686"
@@ -81,26 +81,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /docker/appdata/bazarr:/config
       - /mnt/data:/data/media
-  plex:
-    image: cr.hotio.dev/hotio/plex
-    container_name: plex 
-    network_mode: host
-    restart: unless-stopped
-    volumes:
-        - /docker/appdata/plex:/config
-        - /mnt/data/media:/data/media
-    environment:
-        - PUID=106
-        - PGID=112
-        - UMASK=002
-        - PLEX_CLAIM=claim-JR7jmE-ybxzVKxZffz1W
-        - ALLOWED_NETWORKS=192.168.2.0/24,10.20.30.0/24
-        - PLEX_PASS="yes"
-    ports:
-      - "32400:32400" 
   qbittorrent:
    container_name: qbittorrent
-   image: cr.hotio.dev/hotio/qbittorrent
+   image: cr.hotio.dev/hotio/qbittorrent:latest
    network_mode: host
    restart: unless-stopped
    ports:
@@ -136,7 +119,7 @@ services:
       - /docker/appdata/prowlarr:/config
   overseerr:
     container_name: overseerr
-    image: cr.hotio.dev/hotio/overseerr
+    image: cr.hotio.dev/hotio/overseerr:latest
     restart: unless-stopped
     ports:
       - "5055:5055"
