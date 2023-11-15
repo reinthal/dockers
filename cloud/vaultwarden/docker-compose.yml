@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       - ADMIN_TOKEN=$VAULT_ADMIN_TOKEN
-      - DOMAIN=https://vault.reinthal.me
+      - DOMAIN=https://${DOMAIN}
       - WEBSOCKET_ENABLED=true  # Enable WebSocket notifications.
     ports:
       - 8085:80
