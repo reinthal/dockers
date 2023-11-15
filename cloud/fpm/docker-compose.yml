@@ -4,16 +4,19 @@ services:
   db:
     image: postgres:13.4-alpine3.14
     restart: always
+    container_name: nextcloud_db
     volumes:
       - db:/var/lib/postgresql/data
     env_file:
       - db.env
 
   redis:
+    container_name: nextcloud_redis
     image: redis:6.2.5-alpine3.14
     restart: always
 
   app:
+    container_name: nextcloud_app
     image: nextcloud:27.1.2-fpm-alpine
     restart: always
     volumes:
@@ -28,9 +31,9 @@ services:
       - redis
 
   web:
+    container_name: nextcloud_web
     build: ./web
     restart: always
-    container_name: fpm_web_1
     environment:
       - VIRTUAL_HOST=cloud.reinthal.me  
       - LETSENCRYPT_HOST=cloud.reinthal.me
@@ -44,6 +47,7 @@ services:
 
   cron:
     image: nextcloud:27.1.2-fpm-alpine
+    container_name: nextcloud_cron
     restart: always
     volumes:
       - nextcloud:/var/www/html
