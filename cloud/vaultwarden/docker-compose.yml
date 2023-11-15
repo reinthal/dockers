@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      - ADMIN_TOKEN=$VAULT_ADMIN_TOKEN
+      - DOMAIN=https://vault.reinthal.me
+      - WEBSOCKET_ENABLED=true  # Enable WebSocket notifications.
+    ports:
+      - 8085:80
+      - 3012:3012  # Needed for the ACME HTTP-01 challenge.
+    volumes:
+      - ./vw-data:/data
