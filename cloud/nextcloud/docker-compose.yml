@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13.4-alpine3.14
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    env_file:
+      - db.env
+
+  redis:
+    image: redis:6.2.5-alpine3.14
+    restart: always
+
+  app:
+    image: nextcloud:27.1.2-fpm-alpine
+    restart: always
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+    env_file:
+      - db.env
+    depends_on:
+      - db
+      - redis
+
+  web:
+    build: ./web
+    restart: always
+    environment:
+      - VIRTUAL_HOST=cloud.reinthal.me  
+      - LETSENCRYPT_HOST=cloud.reinthal.me
+      - LETSENCRYPT_EMAIL=user@tryfind.me 
+    ports:
+      - 8080:80
+    volumes:
+      - nextcloud:/var/www/html:ro
+    depends_on:
+      - app
+
+  cron:
+    image: nextcloud:27.1.2-fpm-alpine
+    restart: always
+    volumes:
+      - nextcloud:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  db:
+  nextcloud:
