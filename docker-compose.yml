@@ -7,13 +7,13 @@ services:
     ports:
       - "8686:8686"
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Etc/Stockholm
     volumes:
-      - /docker/appdata/lidarr:/config
-      - /mnt/data:/data
+      - ${APP_DATA}/lidarr:/config
+      - ${MEDIA_FOLDER}:/data
   readarr:
     container_name: readarr
     restart: unless-stopped
@@ -21,13 +21,13 @@ services:
     ports:
       - "8787:8787"
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Etc/Stockholm
     volumes:
-      - /docker/appdata/readarr:/config
-      - /mnt/data:/data
+      - ${APP_DATA}/readarr:/config
+      - ${MEDIA_FOLDER}:/data
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
@@ -38,14 +38,14 @@ services:
     ports:
       - 7878:7878
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Europe/Stockholm
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/radarr:/config
-      - /mnt/data:/data
+      - ${APP_DATA}/radarr:/config
+      - ${MEDIA_FOLDER}:/data
   sonarr:
     container_name: sonarr
     network_mode: host
@@ -56,13 +56,13 @@ services:
     ports:
       - 8989:8989
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Europe/Stockholm
     volumes:
-      - /docker/appdata/sonarr:/config
-      - /mnt/data:/data
+      - ${APP_DATA}/sonarr:/config
+      - ${MEDIA_FOLDER}:/data
   bazarr:
     container_name: bazarr
     image: cr.hotio.dev/hotio/bazarr:latest
@@ -73,14 +73,14 @@ services:
     ports:
       - 6767:6767
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Europe/Stockholm
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/bazarr:/config
-      - /mnt/data:/data/media
+      - ${APP_DATA}/bazarr:/config
+      - ${MEDIA_FOLDER}:/data/media
   qbittorrent:
    container_name: qbittorrent
    image: cr.hotio.dev/hotio/qbittorrent:latest
@@ -89,21 +89,21 @@ services:
    ports:
      - "8080:8080"
    environment:
-     - PUID=106
-     - PGID=112
-     - UMASK=002
+     - PUID=${PUID}
+     - PGID=${PGID}
+     - UMASK=${UMASK}
      - TZ=Etc/Stockholm
    volumes:
-     - /docker/appdata/qbittorrent:/config 
-     - /mnt/data/torrent:/data/torrent
+     - ${APP_DATA}/qbittorrent:/config 
+     - ${MEDIA_FOLDER}/torrent:/data/torrent
   nginx:
     container_name: npm
     image: 'jc21/nginx-proxy-manager:latest'
     network_mode: host
     restart: unless-stopped
     volumes:
-     - /docker/appdata/npm/data:/data
-     - /docker/appdata/npm/lencr:/etc/letsencrypt
+     - ${APP_DATA}/npm/data:/data
+     - ${APP_DATA}/npm/lencr:/etc/letsencrypt
   prowlarr:
     container_name: prowlarr
     image: cr.hotio.dev/hotio/prowlarr:nightly
@@ -111,12 +111,12 @@ services:
     ports:
       - "9696:9696"
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Etc/Stockholm
     volumes:
-      - /docker/appdata/prowlarr:/config
+      - ${APP_DATA}/prowlarr:/config
   overseerr:
     container_name: overseerr
     image: cr.hotio.dev/hotio/overseerr:latest
@@ -124,9 +124,9 @@ services:
     ports:
       - "5055:5055"
     environment:
-      - PUID=106
-      - PGID=112
-      - UMASK=002
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Etc/Stockholm
     volumes:
-      - /docker/appdata/overseerr:/config
+      - ${APP_DATA}/overseerr:/config
