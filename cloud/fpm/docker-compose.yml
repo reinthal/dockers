@@ -30,6 +30,7 @@ services:
   web:
     build: ./web
     restart: always
+    container_name: fpm_web_1
     environment:
       - VIRTUAL_HOST=cloud.reinthal.me  
       - LETSENCRYPT_HOST=cloud.reinthal.me
