@@ -2,13 +2,14 @@ version: "3.2"
 services:
   qbittorrent:
    container_name: qbittorrent
-   image: cr.hotio.dev/hotio/qbittorrent:latest
+   image: lscr.io/linuxserver/qbittorrent:latest
    restart: unless-stopped
    ports:
      - "8080:8080"
+     - "5225:5225"
    environment:
-     - PUID=${PUID}
-     - PGID=${PGID}
+     - PUID=0
+     - PGID=0
      - UMASK=${UMASK}
      - TZ=Europe/Stockholm
    volumes:
