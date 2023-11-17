@@ -14,4 +14,4 @@ services:
      - TZ=Europe/Stockholm
    volumes:
      - ${APP_DATA}/qbittorrent:/config 
-     - ${MEDIA_FOLDER}/torrent:/data/torrent
+     - ${MEDIA_FOLDER}/torrent:/downloads/
