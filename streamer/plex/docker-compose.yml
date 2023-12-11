@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    hostname: streamer
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+    volumes:
+      - ./config/:/config
+      - "/mnt/data/media/transcodes/cache:/config/Library/Application Support/Plex Media Server/Cache/"
+      - /mnt/data/media/transcodes:/transcodes
+      - /mnt/data/media/:/media
+    restart: unless-stopped
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
+    name: proxy
